@@ -1,0 +1,423 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+
+WorldInfo {
+  title "DQN Maze Learning"
+  basicTimeStep 64
+}
+Viewpoint {
+  orientation 0.2986895847722105 0.8533683759432928 -0.42725513090952044 1.1994364319984716
+  position -1.8918177803678935 1.1034913134071507 3.2120737532177466
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 2 2
+  floorAppearance PBRAppearance {
+    roughness 0.5
+    metalness 0
+  }
+  wallHeight 0.15
+}
+Solid {
+  translation 0.8 0.8 0.001
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 1 0
+        roughness 0.3
+        metalness 0
+        emissiveColor 0 0.8 0
+      }
+      geometry Box {
+        size 0.4 0.4 0.001
+      }
+    }
+  ]
+  name "goal_zone"
+  recognitionColors [
+    0 1 0
+  ]
+}
+Solid {
+  translation -0.58 -0.6 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0.34 -0.73 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(1)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.62 -0.26 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(2)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0.13 -0.04 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(6)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.29 0.35 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(9)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.21 0.84 0.075
+  rotation 0 0 1 1.5708
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(8)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0.11 -0.57 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(3)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.77 0 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(4)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.77 0.58 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(7)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0.62 -0.34 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(5)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0.62 0.23 0.075
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.3 0.3 0.5
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Box {
+        size 0.5 0.05 0.15
+      }
+    }
+  ]
+  name "wall_h1(10)"
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -0.04 -0.76 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.52 -0.81 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(1)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.54 -0.43 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(2)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation 0.03 -0.39 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(3)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.34 -0.06 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(4)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.28 0.13 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(7)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.75 0.33 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(5)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+Solid {
+  translation -0.61 0.78 0.05
+  children [
+    DEF OBSTACLE_SHAPE Shape {
+      appearance PBRAppearance {
+        baseColor 0.6 0.4 0.2
+        roughness 0.8
+        metalness 0.1
+      }
+      geometry Cylinder {
+        height 0.1
+        radius 0.06
+      }
+    }
+  ]
+  name "obstacle1(6)"
+  boundingObject Cylinder {
+    height 0.1
+    radius 0.08
+  }
+}
+E-puck {
+  translation -0.53 0.09 0
+  controller "epuck_dqn"
+  supervisor TRUE
+  turretSlot [
+    Lidar {
+      translation 0 0 0.02
+      tiltAngle -0.1
+      horizontalResolution 256
+      fieldOfView 1.57
+      numberOfLayers 6
+      near 0.05
+      minRange 0.05
+      maxRange 1.5
+      type "rotating"
+      noise 0.05
+      defaultFrequency 2
+    }
+  ]
+}

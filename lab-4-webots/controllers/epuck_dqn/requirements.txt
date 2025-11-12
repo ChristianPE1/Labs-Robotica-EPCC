@@ -1,0 +1,6 @@
+# Requisitos para DQN en Webots
+# Versión ligera con TensorFlow/Keras (solo CPU)
+
+tensorflow>=2.15.0
+numpy>=1.21.0
+matplotlib>=3.5.0
