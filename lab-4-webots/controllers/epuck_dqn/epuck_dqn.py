@@ -5,13 +5,13 @@ import random
 from collections import deque
 import matplotlib.pyplot as plt
 
-# DESHABILITAR GPU COMPLETAMENTE - NO TENGO NVIDIA/AMD/CUDA
+# Disable GPU and force CPU execution
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'false'
 
 import tensorflow as tf
-# Forzar CPU y deshabilitar GPU a nivel de TensorFlow
+# Configure TensorFlow to use CPU only
 tf.config.set_visible_devices([], 'GPU')
 physical_devices = tf.config.list_physical_devices('GPU')
 for device in physical_devices:
@@ -197,7 +197,7 @@ class DQNRobotController:
         # Inicializar LIDAR
         self.init_lidar()
         
-        # IMPORTANTE: Esperar varios timesteps para que LIDAR se inicialice
+        # Wait several timesteps for LIDAR initialization
         for _ in range(10):
             self.robot.step(self.timestep)
         
@@ -248,7 +248,7 @@ class DQNRobotController:
             self.lidar.enablePointCloud()
     
     def get_sensor_values(self):
-        """Obtener valores normalizados de sensores - AJUSTADO PARA MUNDO 2x2m"""
+        """Return normalized proximity sensor values. Thresholds tuned for a 2x2 m world."""
         values = []
         for sensor in self.sensors:
             raw_value = sensor.getValue()
@@ -335,40 +335,44 @@ class DQNRobotController:
         return np.array(state, dtype=np.float32)
     
     def execute_action(self, action_idx):
-        """Ejecutar acción en el robot CON SEGURIDAD MENOS AGRESIVA"""
-        # PRIMERO: Verificar sensores de seguridad - UMBRALES MÁS REALISTAS
+        """Execute selected action applying conservative safety checks.
+
+        Uses proximity sensors to determine whether to stop or apply an evasive
+        maneuver before executing the action commanded by the policy.
+        """
         sensor_values = self.get_sensor_values()
         max_sensor = max(sensor_values)
 
-        # SEGURIDAD: Solo detener si hay colisión CRÍTICA (>0.9), no antes
-        if max_sensor > 0.95:  # Aumentado de 0.7 a 0.95
+        # If proximity exceeds a critical threshold, stop the motors
+        if max_sensor > 0.95:
             self.left_motor.setVelocity(0.0)
             self.right_motor.setVelocity(0.0)
-            return  # No ejecutar la acción de la red
+            return
 
-        # Si está muy cerca (>0.8), forzar giro evasivo suave
-        elif max_sensor > 0.8:  # Aumentado de 0.4 a 0.8
-            # Giro muy suave para no interferir con aprendizaje
-            self.left_motor.setVelocity(-0.2 * MAX_SPEED)  # Más suave
-            self.right_motor.setVelocity(0.5 * MAX_SPEED)   # Más suave
-            return        # Si todo está bien, ejecutar la acción normal de la red neuronal
+        # If proximity indicates a very close obstacle, apply a gentle evasive turn
+        if max_sensor > 0.8:
+            # Apply reduced-magnitude evasive velocities
+            self.left_motor.setVelocity(-0.2 * MAX_SPEED)
+            self.right_motor.setVelocity(0.5 * MAX_SPEED)
+            return
+
         left_speed, right_speed = ACTIONS[action_idx]
         self.left_motor.setVelocity(left_speed * MAX_SPEED)
         self.right_motor.setVelocity(right_speed * MAX_SPEED)
     
     def calculate_reward(self, state, prev_state):
-        """
-        SISTEMA DE RECOMPENSAS: Guiar al robot hacia la meta (0.8, 0.8)
-        - Gran recompensa por llegar a la meta
-        - Recompensa por acercarse a la meta
-        - Penalizar obstáculos cercanos
-        - Penalizar por alejarse de la meta
+        """Reward function guiding the agent toward the goal.
+
+        - Large positive reward for reaching the goal
+        - Positive reward for reducing distance to the goal
+        - Negative reward for proximity to obstacles
+        - Small step penalty to encourage efficiency
         """
         reward = 0
         
         # 1. GRAN RECOMPENSA: Llegar a la zona meta
         if self.detect_goal_with_lidar():
-            reward += 500  # ¡ÉXITO! Llegó a la meta
+            reward += 500  # Meta alcanzada
             return reward, True
         
         # 2. RECOMPENSA POR ACERCARSE A LA META
@@ -463,8 +467,8 @@ class DQNRobotController:
             steps += 1
             
             if done:
-                # ¡CELEBRACIÓN! El robot escapó del laberinto
-                print(f"\n🎉 ¡ÉXITO! Robot escapó en {steps} pasos con reward {episode_reward:.1f}")
+                # Meta alcanzada
+                print(f"Meta alcanzada en {steps} pasos con reward {episode_reward:.1f}")
                 break
         
         # Decrementar epsilon
@@ -488,8 +492,8 @@ class DQNRobotController:
         return episode_reward, steps, success_rate
     
     def celebrate_escape(self):
-        """Celebración cuando el robot escapa del laberinto"""
-        print("   ¡ÁREA ABIERTA ENCONTRADA! Ejecutando giro de celebración")
+        """Perform a spin maneuver when the goal is reached."""
+        print("Area open detected. Executing spin maneuver")
         
         # Detenerse completamente primero
         self.left_motor.setVelocity(0.0)
@@ -497,7 +501,7 @@ class DQNRobotController:
         for _ in range(20):  # Más tiempo para asegurar detención completa
             self.robot.step(self.timestep)
         
-        print("   Iniciando giro de celebración (360°)")
+    print("Initiating 360-degree spin")
         
         # Girar 360 grados (celebración) - Más lento y visible
         spin_duration = 4.0  # Más tiempo (4 segundos)
@@ -509,10 +513,10 @@ class DQNRobotController:
             self.right_motor.setVelocity(-MAX_SPEED * 0.3) # Más lento
             self.robot.step(self.timestep)
             
-            # Mostrar progreso cada segundo
+            # Display progress periodically
             if i % int(1000 / self.timestep) == 0:
                 progress = int((i / spin_steps) * 100)
-                print(f"   ⏳ Giro: {progress}% completado...")
+                print(f"Spin progress: {progress}%")
         
         # Detenerse completamente de nuevo
         self.left_motor.setVelocity(0.0)
@@ -520,7 +524,7 @@ class DQNRobotController:
         for _ in range(20):
             self.robot.step(self.timestep)
         
-        print("   Celebración completada - Robot listo para siguiente episodio")
+    print("Spin maneuver completed; robot ready for next episode")
     
     def run_training(self):
         """Ejecutar entrenamiento completo"""

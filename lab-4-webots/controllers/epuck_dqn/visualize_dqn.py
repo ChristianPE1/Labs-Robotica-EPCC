@@ -1,6 +1,8 @@
-"""
-Script para visualizar y analizar el entrenamiento de DQN con TensorFlow/Keras
-Permite cargar modelos guardados y visualizar métricas
+"""DQN training visualization and analysis utilities.
+
+This module provides functions to load saved Keras models, inspect the
+network architecture, and generate plots for Q-value distributions and
+training diagnostics.
 """
 
 import tensorflow as tf
@@ -11,32 +13,39 @@ from config import *
 from epuck_dqn import create_dqn_model
 
 def load_model_info(model_path):
-    """Cargar información del modelo TensorFlow/Keras"""
+    """Load a TensorFlow/Keras model from disk.
+
+    Returns the loaded model or None if loading fails.
+    """
     if not os.path.exists(model_path):
-        print(f"❌ Modelo no encontrado: {model_path}")
+        print(f"Model not found: {model_path}")
         return None
 
     try:
         model = tf.keras.models.load_model(model_path)
         return model
     except Exception as e:
-        print(f"❌ Error cargando modelo: {e}")
+        print(f"Error loading model: {e}")
         return None
 
 def plot_model_architecture():
-    """Visualizar la arquitectura de la red DQN con Keras"""
+    """Print model summary and parameter counts.
+
+    Uses the architecture defined in `config.py` to instantiate a model and
+    prints its summary and parameter counts.
+    """
     model = create_dqn_model(STATE_SIZE, HIDDEN_LAYERS, len(ACTIONS))
 
     print("\n" + "="*60)
-    print("ARQUITECTURA DE LA RED NEURONAL DQN (TensorFlow/Keras)")
+    print("DQN model architecture (TensorFlow/Keras)")
     print("="*60)
     print(model.summary())
-    print("\nNúmero total de parámetros:", model.count_params())
-    print("Parámetros entrenables:", sum([layer.count_params() for layer in model.layers if len(layer.trainable_weights) > 0]))
+    print("\nTotal parameters:", model.count_params())
+    print("Trainable parameters:", sum([layer.count_params() for layer in model.layers if len(layer.trainable_weights) > 0]))
     print("="*60 + "\n")
 
 def analyze_training_log(log_file='dqn_training_log.txt'):
-    """Analizar archivo de log si existe"""
+    """Parse a training log file if present and extract episode metrics."""
     if not os.path.exists(log_file):
         print(f"No se encontró archivo de log: {log_file}")
         return
@@ -54,17 +63,17 @@ def analyze_training_log(log_file='dqn_training_log.txt'):
                 reward = float(line.split(':')[1].strip())
 
 def visualize_q_values_distribution(model_path='best_dqn_model.h5'):
-    """Visualizar distribución de Q-valores para diferentes estados"""
+    """Generate and save plots of Q-value distributions for sample states."""
     model = load_model_info(model_path)
     if model is None:
         return
 
-    print("📊 Generando distribución de Q-valores...")
+    print("Generating Q-values distribution...")
 
-    # Generar estados de prueba
+    # Generate sample states for analysis
     test_states = []
 
-    # Estados cerca de la meta
+    # States near the goal
     for dist in [0.1, 0.5, 1.0]:
         for angle in [-np.pi, -np.pi/2, 0, np.pi/2, np.pi]:
             # Sensores limpios, distancia normalizada, ángulo
@@ -72,7 +81,7 @@ def visualize_q_values_distribution(model_path='best_dqn_model.h5'):
             state = sensors + [dist/3.0, angle/np.pi]
             test_states.append(state)
 
-    # Estados con obstáculos
+    # States with obstacles
     for sensor_idx in range(8):
         sensors = [0.0] * 8
         sensors[sensor_idx] = 0.8  # Obstáculo cercano
@@ -81,57 +90,56 @@ def visualize_q_values_distribution(model_path='best_dqn_model.h5'):
 
     test_states = np.array(test_states, dtype=np.float32)
 
-    # Predecir Q-valores
+    # Predict Q-values
     q_values = model.predict(test_states, verbose=0)
 
     # Visualizar
     fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 
-    # Distribución general
+    # Overall distribution
     axes[0, 0].hist(q_values.flatten(), bins=50, alpha=0.7, color='blue')
-    axes[0, 0].set_xlabel('Q-valor')
-    axes[0, 0].set_ylabel('Frecuencia')
-    axes[0, 0].set_title('Distribución General de Q-valores')
+    axes[0, 0].set_xlabel('Q-value')
+    axes[0, 0].set_ylabel('Frequency')
+    axes[0, 0].set_title('Overall Q-value Distribution')
     axes[0, 0].grid(True)
 
-    # Q-valores por acción
+    # Q-values per action
     action_names = ['FORWARD', 'TURN_LEFT', 'TURN_RIGHT', 'SLIGHT_LEFT', 'SLIGHT_RIGHT']
     q_by_action = q_values.mean(axis=0)
     axes[0, 1].bar(action_names, q_by_action, color='green', alpha=0.7)
-    axes[0, 1].set_ylabel('Q-valor promedio')
-    axes[0, 1].set_title('Q-valores Promedio por Acción')
+    axes[0, 1].set_ylabel('Mean Q-value')
+    axes[0, 1].set_title('Mean Q-value per Action')
     axes[0, 1].tick_params(axis='x', rotation=45)
     axes[0, 1].grid(True, axis='y')
 
-    # Estados cerca de meta vs lejos
-    near_goal = q_values[:5]  # Primeros 5 estados (cerca de meta)
-    far_goal = q_values[5:10]  # Siguientes 5 estados (lejos de meta)
+    # States near vs far from goal
+    near_goal = q_values[:5]
+    far_goal = q_values[5:10]
 
-    axes[1, 0].boxplot([near_goal.flatten(), far_goal.flatten()],
-                      labels=['Cerca de Meta', 'Lejos de Meta'])
-    axes[1, 0].set_ylabel('Q-valor')
-    axes[1, 0].set_title('Q-valores: Cerca vs Lejos de Meta')
+    axes[1, 0].boxplot([near_goal.flatten(), far_goal.flatten()], labels=['Near goal', 'Far from goal'])
+    axes[1, 0].set_ylabel('Q-value')
+    axes[1, 0].set_title('Q-values: Near vs Far from Goal')
     axes[1, 0].grid(True, axis='y')
 
-    # Estados con obstáculos
-    obstacle_states = q_values[10:]  # Estados con obstáculos
+    # States with obstacles
+    obstacle_states = q_values[10:]
     axes[1, 1].boxplot(obstacle_states.flatten())
-    axes[1, 1].set_ylabel('Q-valor')
-    axes[1, 1].set_title('Q-valores en Estados con Obstáculos')
+    axes[1, 1].set_ylabel('Q-value')
+    axes[1, 1].set_title('Q-values for Obstacle States')
     axes[1, 1].grid(True, axis='y')
 
     plt.tight_layout()
     plt.savefig('q_values_distribution.png', dpi=150, bbox_inches='tight')
-    print("✅ Gráfica guardada: q_values_distribution.png")
+    print("Saved plot: q_values_distribution.png")
     plt.close()
 
 def test_model_policy(model_path='best_dqn_model.h5', num_tests=5):
-    """Probar la política del modelo en escenarios específicos"""
+    """Evaluate model policy on a set of predefined scenarios."""
     model = load_model_info(model_path)
     if model is None:
         return
 
-    print(f"🎯 Probando política del modelo ({num_tests} escenarios)...")
+    print(f"Testing model policy ({num_tests} scenarios)...")
 
     test_scenarios = [
         {
@@ -164,7 +172,7 @@ def test_model_policy(model_path='best_dqn_model.h5', num_tests=5):
     action_names = ['FORWARD', 'TURN_LEFT', 'TURN_RIGHT', 'SLIGHT_LEFT', 'SLIGHT_RIGHT']
 
     print("\n" + "="*80)
-    print("PRUEBA DE POLÍTICA DEL MODELO")
+    print("MODEL POLICY TEST")
     print("="*80)
 
     for i, scenario in enumerate(test_scenarios[:num_tests]):
@@ -176,12 +184,12 @@ def test_model_policy(model_path='best_dqn_model.h5', num_tests=5):
         best_q = q_values[best_action_idx]
 
         print(f"\n{i+1}. {scenario['name']}")
-        print(f"   Estado: {scenario['state']}")
-        print(f"   Acción elegida: {best_action} (Q={best_q:.3f})")
-        print(f"   Esperado: {scenario['expected']}")
+    print(f"   State: {scenario['state']}")
+    print(f"   Selected action: {best_action} (Q={best_q:.3f})")
+    print(f"   Expected: {scenario['expected']}")
 
-        # Mostrar todas las Q-valores
-        q_str = "   Q-valores: "
+        # Display all Q-values
+        q_str = "   Q-values: "
         for j, (action, q) in enumerate(zip(action_names, q_values)):
             marker = " ←" if j == best_action_idx else ""
             q_str += f"{action}={q:.3f}{marker}  "
@@ -190,8 +198,8 @@ def test_model_policy(model_path='best_dqn_model.h5', num_tests=5):
     print("\n" + "="*80)
 
 def analyze_training_progress():
-    """Analizar el progreso del entrenamiento desde archivos guardados"""
-    print("📈 Analizando progreso del entrenamiento...")
+    """Analyze training progress from saved model checkpoints."""
+    print("Analyzing training progress...")
 
     # Buscar archivos de modelos guardados
     model_files = []
@@ -201,16 +209,16 @@ def analyze_training_progress():
             model_files.append((episode, file))
 
     if not model_files:
-        print("❌ No se encontraron modelos guardados")
+        print("No saved models found")
         return
 
     model_files.sort()
     episodes = [ep for ep, _ in model_files]
-    print(f"📊 Encontrados {len(episodes)} modelos guardados: episodios {episodes}")
+    print(f"Found {len(episodes)} saved models: episodes {episodes}")
 
     # Cargar el último modelo
     last_ep, last_file = model_files[-1]
-    print(f"🔍 Analizando modelo del episodio {last_ep}...")
+    print(f"Analyzing model from episode {last_ep}...")
 
     model = load_model_info(last_file)
     if model is None:
@@ -227,12 +235,12 @@ def analyze_training_progress():
 
 def main():
     """Función principal"""
-    print("🤖 VISUALIZACIÓN Y ANÁLISIS DQN")
+    print("DQN Visualization and Analysis")
     print("="*50)
 
     # Verificar que estamos en el directorio correcto
     if not os.path.exists('config.py'):
-        print("❌ Ejecuta este script desde controllers/epuck_dqn/")
+        print("Run this script from controllers/epuck_dqn/")
         print("   cd controllers/epuck_dqn")
         print("   python3 visualize_dqn.py")
         return
@@ -265,16 +273,16 @@ def main():
             elif choice == '4':
                 analyze_training_progress()
             elif choice == '5':
-                print("👋 ¡Hasta luego!")
+                print("Exit.")
                 break
             else:
-                print("❌ Opción no válida")
+                print("Invalid option")
 
         except KeyboardInterrupt:
-            print("\n👋 ¡Hasta luego!")
+            print("\nExit.")
             break
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
