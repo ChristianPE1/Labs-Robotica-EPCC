@@ -11,7 +11,7 @@ def plot_reward_curve(episode_rewards, save_path='plots/reward_curve.png'):
 
     # Calcular promedio móvil
     window = 100
-    moving_avg = compute_statistics(episode_rewards, window)
+    moving_avg, _ = compute_statistics(episode_rewards, window)
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_rewards, alpha=0.3, color='blue', label='Recompensa del Episodio')
@@ -36,7 +36,7 @@ def plot_episode_length(episode_lengths, save_path='plots/episode_length.png'):
 
     # Calcular promedio móvil
     window = 100
-    moving_avg = compute_statistics(episode_lengths, window)
+    moving_avg, _ = compute_statistics(episode_lengths, window)
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_lengths, alpha=0.3, color='green', label='Longitud del Episodio')
@@ -61,7 +61,7 @@ def plot_loss_curve(episode_losses, save_path='plots/loss_curve.png'):
 
     # Calcular promedio móvil
     window = 100
-    moving_avg = compute_statistics(episode_losses, window)
+    moving_avg, _ = compute_statistics(episode_losses, window)
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_losses, alpha=0.3, color='purple', label='Pérdida del Episodio')
