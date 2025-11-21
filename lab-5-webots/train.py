@@ -45,6 +45,11 @@ def train_dqn():
     episode_losses = []
     success_count = 0
 
+    # Early stopping
+    early_stop_threshold = 450  # Recompensa promedio para considerar convergencia
+    early_stop_patience = 10  # Episodios consecutivos con recompensa > threshold
+    early_stop_counter = 0
+
     # Bucle de entrenamiento
     print("Iniciando entrenamiento...")
     print("-" * 60)
@@ -94,6 +99,16 @@ def train_dqn():
         avg_reward = np.mean(episode_rewards[-window:])
         avg_length = np.mean(episode_lengths[-window:])
 
+        # Early stopping check
+        if avg_reward > early_stop_threshold:
+            early_stop_counter += 1
+            if early_stop_counter >= early_stop_patience:
+                print(f"\nEarly stopping activado en episodio {episode + 1}")
+                print(f"Recompensa promedio ({avg_reward:.2f}) > {early_stop_threshold} por {early_stop_patience} episodios consecutivos")
+                break
+        else:
+            early_stop_counter = 0
+
         # Imprimir progreso
         if (episode + 1) % config.PRINT_EVERY == 0:
             success_rate = (success_count / (episode + 1)) * 100
@@ -125,9 +140,9 @@ def train_dqn():
         'episode_rewards': episode_rewards,
         'episode_lengths': episode_lengths,
         'episode_losses': episode_losses,
-        'episode': config.NUM_EPISODES
+        'episode': len(episode_rewards)
     }
-    save_checkpoint(agent.policy_net, agent.optimizer, config.NUM_EPISODES, final_metrics, final_checkpoint)
+    save_checkpoint(agent.policy_net, agent.optimizer, len(episode_rewards), final_metrics, final_checkpoint)
     print(f"Modelo final guardado: {final_checkpoint}")
 
     metrics_file = "metrics/training_metrics.pkl"
@@ -135,11 +150,13 @@ def train_dqn():
     print(f"Métricas de entrenamiento guardadas: {metrics_file}")
 
     # Imprimir estadísticas finales
+    total_episodes = len(episode_rewards)
     print("\nEstadísticas de entrenamiento:")
     print(f"  Recompensa promedio: {np.mean(episode_rewards):.2f}")
     print(f"  Longitud promedio del episodio: {np.mean(episode_lengths):.1f}")
-    print(f"  Tasa de éxito: {(success_count / config.NUM_EPISODES) * 100:.2f}%")
+    print(f"  Tasa de éxito: {(success_count / total_episodes) * 100:.2f}%")
     print(f"  Epsilon final: {agent.epsilon:.4f}")
+    print(f"  Episodios entrenados: {total_episodes}")
 
     env.close()
 

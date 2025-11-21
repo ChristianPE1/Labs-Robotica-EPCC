@@ -58,6 +58,7 @@ class DQNNetwork(nn.Module):
         for hidden_dim in hidden_layers:
             layers.append(nn.Linear(input_dim, hidden_dim))
             layers.append(nn.ReLU())
+            layers.append(nn.Dropout(0.1))
             input_dim = hidden_dim
 
         layers.append(nn.Linear(input_dim, action_dim))
@@ -112,12 +113,14 @@ class DQNAgent:
         self.steps = 0
         self.losses = []
     
-    def select_action(self, state, training=True):
+    def select_action(self, state, training=True, epsilon=None):
         # Seleccionar acción usando política epsilon-greedy
         # state: Observación del estado actual
         # training: Si está en modo de entrenamiento (habilita exploración)
+        # epsilon: Valor de epsilon opcional para forzar exploración
         # Returns: Índice de acción seleccionada
-        if training and random.random() < self.epsilon:
+        eps = epsilon if epsilon is not None else self.epsilon
+        if training and random.random() < eps:
             return random.randrange(self.action_dim)
 
         with torch.no_grad():

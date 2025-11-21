@@ -2,15 +2,15 @@ import torch
 
 # Configuración del entorno
 ENV_NAME = 'CartPole-v1'
-NUM_EPISODES = 1000  # Aumentado para más entrenamiento
+NUM_EPISODES = 1500  # Aumentado para más entrenamiento
 MAX_STEPS = 500
 
 # Hiperparámetros DQN
-LEARNING_RATE = 0.001  # Ajustado para acelerar aprendizaje
+LEARNING_RATE = 0.0005  # Reducido para estabilidad
 GAMMA = 0.99
 EPSILON_START = 1.0
 EPSILON_END = 0.01
-EPSILON_DECAY = 0.996  # Decay más gradual para mejor exploración
+EPSILON_DECAY = 0.995  # Decay más agresivo para menos exploración tardía
 BATCH_SIZE = 64  # Reducido para estabilidad
 MEMORY_SIZE = 20000  # Aumentado para más experiencias
 TARGET_UPDATE_FREQ = 5  # Más frecuente
