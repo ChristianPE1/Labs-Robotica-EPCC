@@ -16,7 +16,7 @@ MEMORY_SIZE = 20000  # Aumentado para más experiencias
 TARGET_UPDATE_FREQ = 5  # Más frecuente
 
 # Arquitectura de la red neuronal
-HIDDEN_LAYERS = [128, 128]
+HIDDEN_LAYERS = [256, 128, 64]
 
 # Parámetros de entrenamiento
 SAVE_EVERY = 50

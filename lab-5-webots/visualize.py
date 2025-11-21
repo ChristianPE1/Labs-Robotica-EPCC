@@ -15,7 +15,7 @@ def plot_reward_curve(episode_rewards, save_path='plots/reward_curve.png'):
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_rewards, alpha=0.3, color='blue', label='Recompensa del Episodio')
-    plt.plot(episodes[window-1:], moving_avg, color='red', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
+    plt.plot(episodes[window-1:], moving_avg[window-1:], color='red', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
 
     plt.xlabel('Episodio', fontsize=12)
     plt.ylabel('Recompensa', fontsize=12)
@@ -40,7 +40,7 @@ def plot_episode_length(episode_lengths, save_path='plots/episode_length.png'):
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_lengths, alpha=0.3, color='green', label='Longitud del Episodio')
-    plt.plot(episodes[window-1:], moving_avg, color='orange', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
+    plt.plot(episodes[window-1:], moving_avg[window-1:], color='orange', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
 
     plt.xlabel('Episodio', fontsize=12)
     plt.ylabel('Longitud (Pasos)', fontsize=12)
@@ -65,7 +65,7 @@ def plot_loss_curve(episode_losses, save_path='plots/loss_curve.png'):
 
     plt.figure(figsize=(12, 6))
     plt.plot(episodes, episode_losses, alpha=0.3, color='purple', label='Pérdida del Episodio')
-    plt.plot(episodes[window-1:], moving_avg, color='darkred', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
+    plt.plot(episodes[window-1:], moving_avg[window-1:], color='darkred', linewidth=2, label=f'Promedio Móvil de {window} Episodios')
 
     plt.xlabel('Episodio', fontsize=12)
     plt.ylabel('Pérdida', fontsize=12)

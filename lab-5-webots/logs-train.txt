@@ -1,23 +1,18 @@
-import torch
-
-# Configuración del entorno
-ENV_NAME = 'CartPole-v1'
 NUM_EPISODES = 1000  # Aumentado para más entrenamiento
 MAX_STEPS = 500
 
 # Hiperparámetros DQN
-LEARNING_RATE = 0.0005  # Reducido para estabilidad
+LEARNING_RATE = 0.001  # Ajustado para acelerar aprendizaje
 GAMMA = 0.99
 EPSILON_START = 1.0
 EPSILON_END = 0.01
-EPSILON_DECAY = 0.995  # Más gradual
-BATCH_SIZE = 128  # Aumentado para mejores muestras
+EPSILON_DECAY = 0.996  # Decay más gradual para mejor exploración
+BATCH_SIZE = 64  # Reducido para estabilidad
 MEMORY_SIZE = 20000  # Aumentado para más experiencias
 TARGET_UPDATE_FREQ = 5  # Más frecuente
 
 # Arquitectura de la red neuronal
 HIDDEN_LAYERS = [128, 128]
-
 
 Información del dispositivo:
   Usando dispositivo: cuda
@@ -32,642 +27,642 @@ Episodios: 1000
 Iniciando entrenamiento...
 ------------------------------------------------------------
 Episodio 10/1000
-  Recompensa: 13.00 | Promedio: 24.60
-  Longitud: 13 | Promedio: 24.6
-  Pérdida: 8.4055 | Epsilon: 0.5507
+  Recompensa: 16.00 | Promedio: 18.60
+  Longitud: 16 | Promedio: 18.6
+  Pérdida: 11.5653 | Epsilon: 0.6108
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 20/1000
-  Recompensa: 22.00 | Promedio: 20.40
-  Longitud: 22 | Promedio: 20.4
-  Pérdida: 25.8976 | Epsilon: 0.2445
+  Recompensa: 90.00 | Promedio: 42.20
+  Longitud: 90 | Promedio: 42.2
+  Pérdida: 38.9802 | Epsilon: 0.0437
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 30/1000
-  Recompensa: 253.00 | Promedio: 47.97
-  Longitud: 253 | Promedio: 48.0
-  Pérdida: 27.3655 | Epsilon: 0.0100
+  Recompensa: 263.00 | Promedio: 80.23
+  Longitud: 263 | Promedio: 80.2
+  Pérdida: 13.3887 | Epsilon: 0.0100
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 40/1000
-  Recompensa: 201.00 | Promedio: 95.03
-  Longitud: 201 | Promedio: 95.0
-  Pérdida: 15.9742 | Epsilon: 0.0100
+  Recompensa: 196.00 | Promedio: 112.12
+  Longitud: 196 | Promedio: 112.1
+  Pérdida: 6.2889 | Epsilon: 0.0100
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 50/1000
-  Recompensa: 248.00 | Promedio: 129.38
-  Longitud: 248 | Promedio: 129.4
-  Pérdida: 9.4724 | Epsilon: 0.0100
+  Recompensa: 208.00 | Promedio: 128.68
+  Longitud: 208 | Promedio: 128.7
+  Pérdida: 8.5526 | Epsilon: 0.0100
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_50.pt
 ------------------------------------------------------------
 Episodio 60/1000
-  Recompensa: 260.00 | Promedio: 153.48
-  Longitud: 260 | Promedio: 153.5
-  Pérdida: 13.0627 | Epsilon: 0.0100
+  Recompensa: 204.00 | Promedio: 145.90
+  Longitud: 204 | Promedio: 145.9
+  Pérdida: 277.1892 | Epsilon: 0.0100
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 70/1000
-  Recompensa: 235.00 | Promedio: 164.04
-  Longitud: 235 | Promedio: 164.0
-  Pérdida: 13.6807 | Epsilon: 0.0100
+  Recompensa: 157.00 | Promedio: 150.87
+  Longitud: 157 | Promedio: 150.9
+  Pérdida: 49.5696 | Epsilon: 0.0100
   Tasa de éxito: 0.00%
 ------------------------------------------------------------
 Episodio 80/1000
-  Recompensa: 206.00 | Promedio: 169.72
-  Longitud: 206 | Promedio: 169.7
-  Pérdida: 10.8472 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 500.00 | Promedio: 156.07
+  Longitud: 500 | Promedio: 156.1
+  Pérdida: 34.5490 | Epsilon: 0.0100
+  Tasa de éxito: 1.25%
 ------------------------------------------------------------
 Episodio 90/1000
-  Recompensa: 195.00 | Promedio: 172.43
-  Longitud: 195 | Promedio: 172.4
-  Pérdida: 7.3026 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 186.00 | Promedio: 159.42
+  Longitud: 186 | Promedio: 159.4
+  Pérdida: 14.2334 | Epsilon: 0.0100
+  Tasa de éxito: 1.11%
 ------------------------------------------------------------
 Episodio 100/1000
-  Recompensa: 179.00 | Promedio: 176.67
-  Longitud: 179 | Promedio: 176.7
-  Pérdida: 6.0379 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 171.00 | Promedio: 160.87
+  Longitud: 171 | Promedio: 160.9
+  Pérdida: 9.5639 | Epsilon: 0.0100
+  Tasa de éxito: 1.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_100.pt
 ------------------------------------------------------------
 Episodio 110/1000
-  Recompensa: 180.00 | Promedio: 195.05
-  Longitud: 180 | Promedio: 195.1
-  Pérdida: 3.4180 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 184.00 | Promedio: 188.47
+  Longitud: 184 | Promedio: 188.5
+  Pérdida: 14.2538 | Epsilon: 0.0100
+  Tasa de éxito: 2.73%
 ------------------------------------------------------------
 Episodio 120/1000
-  Recompensa: 145.00 | Promedio: 210.27
-  Longitud: 145 | Promedio: 210.3
-  Pérdida: 1.0785 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 118.00 | Promedio: 198.17
+  Longitud: 118 | Promedio: 198.2
+  Pérdida: 6.7382 | Epsilon: 0.0100
+  Tasa de éxito: 2.50%
 ------------------------------------------------------------
 Episodio 130/1000
-  Recompensa: 174.00 | Promedio: 218.42
-  Longitud: 174 | Promedio: 218.4
-  Pérdida: 0.7171 | Epsilon: 0.0100
-  Tasa de éxito: 0.00%
+  Recompensa: 358.00 | Promedio: 201.38
+  Longitud: 358 | Promedio: 201.4
+  Pérdida: 419.9090 | Epsilon: 0.0100
+  Tasa de éxito: 3.85%
 ------------------------------------------------------------
 Episodio 140/1000
-  Recompensa: 500.00 | Promedio: 225.21
-  Longitud: 500 | Promedio: 225.2
-  Pérdida: 0.9433 | Epsilon: 0.0100
-  Tasa de éxito: 2.14%
+  Recompensa: 408.00 | Promedio: 215.76
+  Longitud: 408 | Promedio: 215.8
+  Pérdida: 113.7442 | Epsilon: 0.0100
+  Tasa de éxito: 4.29%
 ------------------------------------------------------------
 Episodio 150/1000
-  Recompensa: 500.00 | Promedio: 246.34
-  Longitud: 500 | Promedio: 246.3
-  Pérdida: 5.5091 | Epsilon: 0.0100
-  Tasa de éxito: 6.67%
+  Recompensa: 184.00 | Promedio: 222.95
+  Longitud: 184 | Promedio: 222.9
+  Pérdida: 15.9888 | Epsilon: 0.0100
+  Tasa de éxito: 4.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_150.pt
 ------------------------------------------------------------
 Episodio 160/1000
-  Recompensa: 325.00 | Promedio: 244.75
-  Longitud: 325 | Promedio: 244.8
-  Pérdida: 18.8427 | Epsilon: 0.0100
-  Tasa de éxito: 7.50%
+  Recompensa: 227.00 | Promedio: 219.87
+  Longitud: 227 | Promedio: 219.9
+  Pérdida: 34.1001 | Epsilon: 0.0100
+  Tasa de éxito: 3.75%
 ------------------------------------------------------------
 Episodio 170/1000
-  Recompensa: 164.00 | Promedio: 240.54
-  Longitud: 164 | Promedio: 240.5
-  Pérdida: 14.3205 | Epsilon: 0.0100
-  Tasa de éxito: 7.06%
+  Recompensa: 500.00 | Promedio: 247.33
+  Longitud: 500 | Promedio: 247.3
+  Pérdida: 37.5466 | Epsilon: 0.0100
+  Tasa de éxito: 8.24%
 ------------------------------------------------------------
 Episodio 180/1000
-  Recompensa: 107.00 | Promedio: 231.27
-  Longitud: 107 | Promedio: 231.3
-  Pérdida: 95.4571 | Epsilon: 0.0100
-  Tasa de éxito: 6.67%
+  Recompensa: 500.00 | Promedio: 273.63
+  Longitud: 500 | Promedio: 273.6
+  Pérdida: 23.5167 | Epsilon: 0.0100
+  Tasa de éxito: 12.22%
 ------------------------------------------------------------
 Episodio 190/1000
-  Recompensa: 500.00 | Promedio: 254.91
-  Longitud: 500 | Promedio: 254.9
-  Pérdida: 128.0734 | Epsilon: 0.0100
-  Tasa de éxito: 10.53%
+  Recompensa: 470.00 | Promedio: 302.55
+  Longitud: 470 | Promedio: 302.6
+  Pérdida: 173.3915 | Epsilon: 0.0100
+  Tasa de éxito: 15.79%
 ------------------------------------------------------------
 Episodio 200/1000
-  Recompensa: 500.00 | Promedio: 277.62
-  Longitud: 500 | Promedio: 277.6
-  Pérdida: 145.5544 | Epsilon: 0.0100
-  Tasa de éxito: 14.00%
+  Recompensa: 9.00 | Promedio: 287.51
+  Longitud: 9 | Promedio: 287.5
+  Pérdida: 14339.2134 | Epsilon: 0.0100
+  Tasa de éxito: 15.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_200.pt
 ------------------------------------------------------------
 Episodio 210/1000
-  Recompensa: 145.00 | Promedio: 281.23
-  Longitud: 145 | Promedio: 281.2
-  Pérdida: 89.1026 | Epsilon: 0.0100
+  Recompensa: 10.00 | Promedio: 258.99
+  Longitud: 10 | Promedio: 259.0
+  Pérdida: 58442.3447 | Epsilon: 0.0100
   Tasa de éxito: 14.29%
 ------------------------------------------------------------
 Episodio 220/1000
-  Recompensa: 27.00 | Promedio: 276.02
-  Longitud: 27 | Promedio: 276.0
-  Pérdida: 32.3175 | Epsilon: 0.0100
+  Recompensa: 8.00 | Promedio: 245.18
+  Longitud: 8 | Promedio: 245.2
+  Pérdida: 117100.4913 | Epsilon: 0.0100
   Tasa de éxito: 13.64%
 ------------------------------------------------------------
 Episodio 230/1000
-  Recompensa: 109.00 | Promedio: 269.31
-  Longitud: 109 | Promedio: 269.3
-  Pérdida: 42.9255 | Epsilon: 0.0100
+  Recompensa: 9.00 | Promedio: 227.23
+  Longitud: 9 | Promedio: 227.2
+  Pérdida: 66689.3965 | Epsilon: 0.0100
   Tasa de éxito: 13.04%
 ------------------------------------------------------------
 Episodio 240/1000
-  Recompensa: 500.00 | Promedio: 265.15
-  Longitud: 500 | Promedio: 265.1
-  Pérdida: 36.4528 | Epsilon: 0.0100
-  Tasa de éxito: 14.17%
+  Recompensa: 8.00 | Promedio: 192.97
+  Longitud: 8 | Promedio: 193.0
+  Pérdida: 347076.8010 | Epsilon: 0.0100
+  Tasa de éxito: 12.50%
 ------------------------------------------------------------
 Episodio 250/1000
-  Recompensa: 500.00 | Promedio: 265.25
-  Longitud: 500 | Promedio: 265.2
-  Pérdida: 45.1744 | Epsilon: 0.0100
-  Tasa de éxito: 17.20%
+  Recompensa: 10.00 | Promedio: 167.23
+  Longitud: 10 | Promedio: 167.2
+  Pérdida: 2591287.5367 | Epsilon: 0.0100
+  Tasa de éxito: 12.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_250.pt
 ------------------------------------------------------------
 Episodio 260/1000
-  Recompensa: 500.00 | Promedio: 289.44
-  Longitud: 500 | Promedio: 289.4
-  Pérdida: 23.9520 | Epsilon: 0.0100
-  Tasa de éxito: 20.38%
+  Recompensa: 500.00 | Promedio: 178.59
+  Longitud: 500 | Promedio: 178.6
+  Pérdida: 7895.5224 | Epsilon: 0.0100
+  Tasa de éxito: 13.85%
 ------------------------------------------------------------
 Episodio 270/1000
-  Recompensa: 500.00 | Promedio: 320.91
-  Longitud: 500 | Promedio: 320.9
-  Pérdida: 21.2527 | Epsilon: 0.0100
-  Tasa de éxito: 23.33%
+  Recompensa: 339.00 | Promedio: 178.72
+  Longitud: 339 | Promedio: 178.7
+  Pérdida: 364.8816 | Epsilon: 0.0100
+  Tasa de éxito: 16.30%
 ------------------------------------------------------------
 Episodio 280/1000
-  Recompensa: 500.00 | Promedio: 354.33
-  Longitud: 500 | Promedio: 354.3
-  Pérdida: 19.4231 | Epsilon: 0.0100
-  Tasa de éxito: 25.36%
+  Recompensa: 500.00 | Promedio: 181.17
+  Longitud: 500 | Promedio: 181.2
+  Pérdida: 186.2307 | Epsilon: 0.0100
+  Tasa de éxito: 18.93%
 ------------------------------------------------------------
 Episodio 290/1000
-  Recompensa: 80.00 | Promedio: 350.73
-  Longitud: 80 | Promedio: 350.7
-  Pérdida: 27.4218 | Epsilon: 0.0100
-  Tasa de éxito: 26.90%
+  Recompensa: 500.00 | Promedio: 183.63
+  Longitud: 500 | Promedio: 183.6
+  Pérdida: 87.9162 | Epsilon: 0.0100
+  Tasa de éxito: 21.72%
 ------------------------------------------------------------
 Episodio 300/1000
-  Recompensa: 9.00 | Promedio: 307.49
-  Longitud: 9 | Promedio: 307.5
-  Pérdida: 236.3226 | Epsilon: 0.0100
-  Tasa de éxito: 26.00%
+  Recompensa: 151.00 | Promedio: 212.79
+  Longitud: 151 | Promedio: 212.8
+  Pérdida: 59.8669 | Epsilon: 0.0100
+  Tasa de éxito: 22.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_300.pt
 ------------------------------------------------------------
 Episodio 310/1000
-  Recompensa: 14.00 | Promedio: 284.08
-  Longitud: 14 | Promedio: 284.1
-  Pérdida: 2422.4274 | Epsilon: 0.0100
-  Tasa de éxito: 25.16%
+  Recompensa: 145.00 | Promedio: 242.40
+  Longitud: 145 | Promedio: 242.4
+  Pérdida: 72.0913 | Epsilon: 0.0100
+  Tasa de éxito: 21.94%
 ------------------------------------------------------------
 Episodio 320/1000
-  Recompensa: 15.00 | Promedio: 299.84
-  Longitud: 15 | Promedio: 299.8
-  Pérdida: 82.1609 | Epsilon: 0.0100
-  Tasa de éxito: 25.62%
+  Recompensa: 500.00 | Promedio: 266.05
+  Longitud: 500 | Promedio: 266.1
+  Pérdida: 65.4396 | Epsilon: 0.0100
+  Tasa de éxito: 21.56%
 ------------------------------------------------------------
 Episodio 330/1000
-  Recompensa: 12.00 | Promedio: 289.29
-  Longitud: 12 | Promedio: 289.3
-  Pérdida: 132.6431 | Epsilon: 0.0100
-  Tasa de éxito: 24.85%
+  Recompensa: 307.00 | Promedio: 302.47
+  Longitud: 307 | Promedio: 302.5
+  Pérdida: 62.8386 | Epsilon: 0.0100
+  Tasa de éxito: 21.52%
 ------------------------------------------------------------
 Episodio 340/1000
-  Recompensa: 500.00 | Promedio: 269.77
-  Longitud: 500 | Promedio: 269.8
-  Pérdida: 245.6564 | Epsilon: 0.0100
-  Tasa de éxito: 24.41%
+  Recompensa: 415.00 | Promedio: 347.16
+  Longitud: 415 | Promedio: 347.2
+  Pérdida: 34.9177 | Epsilon: 0.0100
+  Tasa de éxito: 22.65%
 ------------------------------------------------------------
 Episodio 350/1000
-  Recompensa: 500.00 | Promedio: 271.86
-  Longitud: 500 | Promedio: 271.9
-  Pérdida: 50.2120 | Epsilon: 0.0100
-  Tasa de éxito: 26.57%
+  Recompensa: 500.00 | Promedio: 393.47
+  Longitud: 500 | Promedio: 393.5
+  Pérdida: 31.1794 | Epsilon: 0.0100
+  Tasa de éxito: 24.57%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_350.pt
 ------------------------------------------------------------
 Episodio 360/1000
-  Recompensa: 500.00 | Promedio: 271.86
-  Longitud: 500 | Promedio: 271.9
-  Pérdida: 44.1741 | Epsilon: 0.0100
-  Tasa de éxito: 28.61%
+  Recompensa: 437.00 | Promedio: 410.39
+  Longitud: 437 | Promedio: 410.4
+  Pérdida: 33.2345 | Epsilon: 0.0100
+  Tasa de éxito: 26.11%
 ------------------------------------------------------------
 Episodio 370/1000
-  Recompensa: 500.00 | Promedio: 271.86
-  Longitud: 500 | Promedio: 271.9
-  Pérdida: 42.0870 | Epsilon: 0.0100
-  Tasa de éxito: 30.54%
+  Recompensa: 448.00 | Promedio: 407.00
+  Longitud: 448 | Promedio: 407.0
+  Pérdida: 20.3896 | Epsilon: 0.0100
+  Tasa de éxito: 27.03%
 ------------------------------------------------------------
 Episodio 380/1000
-  Recompensa: 356.00 | Promedio: 268.73
-  Longitud: 356 | Promedio: 268.7
-  Pérdida: 24.1612 | Epsilon: 0.0100
-  Tasa de éxito: 31.05%
+  Recompensa: 139.00 | Promedio: 401.69
+  Longitud: 139 | Promedio: 401.7
+  Pérdida: 47.4736 | Epsilon: 0.0100
+  Tasa de éxito: 28.16%
 ------------------------------------------------------------
 Episodio 390/1000
-  Recompensa: 500.00 | Promedio: 276.54
-  Longitud: 500 | Promedio: 276.5
-  Pérdida: 24.8953 | Epsilon: 0.0100
-  Tasa de éxito: 32.31%
+  Recompensa: 25.00 | Promedio: 357.02
+  Longitud: 25 | Promedio: 357.0
+  Pérdida: 521.0161 | Epsilon: 0.0100
+  Tasa de éxito: 27.44%
 ------------------------------------------------------------
 Episodio 400/1000
-  Recompensa: 500.00 | Promedio: 325.59
-  Longitud: 500 | Promedio: 325.6
-  Pérdida: 17.9210 | Epsilon: 0.0100
-  Tasa de éxito: 34.00%
+  Recompensa: 19.00 | Promedio: 327.69
+  Longitud: 19 | Promedio: 327.7
+  Pérdida: 2875.4624 | Epsilon: 0.0100
+  Tasa de éxito: 26.75%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_400.pt
 ------------------------------------------------------------
 Episodio 410/1000
-  Recompensa: 500.00 | Promedio: 374.55
-  Longitud: 500 | Promedio: 374.6
-  Pérdida: 20.4626 | Epsilon: 0.0100
-  Tasa de éxito: 35.61%
+  Recompensa: 159.00 | Promedio: 317.49
+  Longitud: 159 | Promedio: 317.5
+  Pérdida: 230.2073 | Epsilon: 0.0100
+  Tasa de éxito: 26.59%
 ------------------------------------------------------------
 Episodio 420/1000
-  Recompensa: 9.00 | Promedio: 356.41
-  Longitud: 9 | Promedio: 356.4
-  Pérdida: 440.3422 | Epsilon: 0.0100
-  Tasa de éxito: 35.00%
+  Recompensa: 428.00 | Promedio: 329.04
+  Longitud: 428 | Promedio: 329.0
+  Pérdida: 86.3933 | Epsilon: 0.0100
+  Tasa de éxito: 26.67%
 ------------------------------------------------------------
 Episodio 430/1000
-  Recompensa: 10.00 | Promedio: 357.23
-  Longitud: 10 | Promedio: 357.2
-  Pérdida: 185.1795 | Epsilon: 0.0100
-  Tasa de éxito: 34.19%
+  Recompensa: 217.00 | Promedio: 333.32
+  Longitud: 217 | Promedio: 333.3
+  Pérdida: 68.5414 | Epsilon: 0.0100
+  Tasa de éxito: 27.21%
 ------------------------------------------------------------
 Episodio 440/1000
-  Recompensa: 8.00 | Promedio: 351.43
-  Longitud: 8 | Promedio: 351.4
-  Pérdida: 5731.9592 | Epsilon: 0.0100
-  Tasa de éxito: 33.41%
+  Recompensa: 500.00 | Promedio: 336.09
+  Longitud: 500 | Promedio: 336.1
+  Pérdida: 33.0384 | Epsilon: 0.0100
+  Tasa de éxito: 28.41%
 ------------------------------------------------------------
 Episodio 450/1000
-  Recompensa: 500.00 | Promedio: 312.22
-  Longitud: 500 | Promedio: 312.2
-  Pérdida: 1691.0921 | Epsilon: 0.0100
-  Tasa de éxito: 33.11%
+  Recompensa: 500.00 | Promedio: 330.60
+  Longitud: 500 | Promedio: 330.6
+  Pérdida: 37.0570 | Epsilon: 0.0100
+  Tasa de éxito: 29.33%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_450.pt
 ------------------------------------------------------------
 Episodio 460/1000
-  Recompensa: 500.00 | Promedio: 312.22
-  Longitud: 500 | Promedio: 312.2
-  Pérdida: 88.7331 | Epsilon: 0.0100
-  Tasa de éxito: 34.57%
+  Recompensa: 350.00 | Promedio: 313.36
+  Longitud: 350 | Promedio: 313.4
+  Pérdida: 31.9847 | Epsilon: 0.0100
+  Tasa de éxito: 29.13%
 ------------------------------------------------------------
 Episodio 470/1000
-  Recompensa: 500.00 | Promedio: 309.96
-  Longitud: 500 | Promedio: 310.0
-  Pérdida: 77.7453 | Epsilon: 0.0100
-  Tasa de éxito: 35.32%
+  Recompensa: 500.00 | Promedio: 318.90
+  Longitud: 500 | Promedio: 318.9
+  Pérdida: 39.8514 | Epsilon: 0.0100
+  Tasa de éxito: 30.43%
 ------------------------------------------------------------
 Episodio 480/1000
-  Recompensa: 500.00 | Promedio: 288.55
-  Longitud: 500 | Promedio: 288.6
-  Pérdida: 45.8168 | Epsilon: 0.0100
-  Tasa de éxito: 35.00%
+  Recompensa: 25.00 | Promedio: 301.91
+  Longitud: 25 | Promedio: 301.9
+  Pérdida: 66.8931 | Epsilon: 0.0100
+  Tasa de éxito: 30.63%
 ------------------------------------------------------------
 Episodio 490/1000
-  Recompensa: 144.00 | Promedio: 269.44
-  Longitud: 144 | Promedio: 269.4
-  Pérdida: 153.8672 | Epsilon: 0.0100
-  Tasa de éxito: 34.29%
+  Recompensa: 9.00 | Promedio: 297.54
+  Longitud: 9 | Promedio: 297.5
+  Pérdida: 378.0188 | Epsilon: 0.0100
+  Tasa de éxito: 30.00%
 ------------------------------------------------------------
 Episodio 500/1000
-  Recompensa: 500.00 | Promedio: 255.27
-  Longitud: 500 | Promedio: 255.3
-  Pérdida: 33.1877 | Epsilon: 0.0100
-  Tasa de éxito: 34.80%
+  Recompensa: 11.00 | Promedio: 296.35
+  Longitud: 11 | Promedio: 296.4
+  Pérdida: 6948.4379 | Epsilon: 0.0100
+  Tasa de éxito: 29.40%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_500.pt
 ------------------------------------------------------------
 Episodio 510/1000
-  Recompensa: 500.00 | Promedio: 240.53
-  Longitud: 500 | Promedio: 240.5
-  Pérdida: 98.4724 | Epsilon: 0.0100
-  Tasa de éxito: 34.90%
+  Recompensa: 257.00 | Promedio: 309.60
+  Longitud: 257 | Promedio: 309.6
+  Pérdida: 139.7044 | Epsilon: 0.0100
+  Tasa de éxito: 29.61%
 ------------------------------------------------------------
 Episodio 520/1000
-  Recompensa: 103.00 | Promedio: 273.83
-  Longitud: 103 | Promedio: 273.8
-  Pérdida: 73.5878 | Epsilon: 0.0100
-  Tasa de éxito: 35.58%
+  Recompensa: 500.00 | Promedio: 314.07
+  Longitud: 500 | Promedio: 314.1
+  Pérdida: 73.3412 | Epsilon: 0.0100
+  Tasa de éxito: 30.19%
 ------------------------------------------------------------
 Episodio 530/1000
-  Recompensa: 159.00 | Promedio: 299.65
-  Longitud: 159 | Promedio: 299.6
-  Pérdida: 51.3889 | Epsilon: 0.0100
-  Tasa de éxito: 35.47%
+  Recompensa: 172.00 | Promedio: 303.25
+  Longitud: 172 | Promedio: 303.2
+  Pérdida: 81.8692 | Epsilon: 0.0100
+  Tasa de éxito: 30.19%
 ------------------------------------------------------------
 Episodio 540/1000
-  Recompensa: 127.00 | Promedio: 312.27
-  Longitud: 127 | Promedio: 312.3
-  Pérdida: 102.8237 | Epsilon: 0.0100
-  Tasa de éxito: 34.81%
+  Recompensa: 500.00 | Promedio: 302.94
+  Longitud: 500 | Promedio: 302.9
+  Pérdida: 47.3588 | Epsilon: 0.0100
+  Tasa de éxito: 31.30%
 ------------------------------------------------------------
 Episodio 550/1000
-  Recompensa: 10.00 | Promedio: 313.06
-  Longitud: 10 | Promedio: 313.1
-  Pérdida: 620.6968 | Epsilon: 0.0100
-  Tasa de éxito: 34.18%
+  Recompensa: 500.00 | Promedio: 310.67
+  Longitud: 500 | Promedio: 310.7
+  Pérdida: 32.8503 | Epsilon: 0.0100
+  Tasa de éxito: 32.18%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_550.pt
 ------------------------------------------------------------
 Episodio 560/1000
-  Recompensa: 500.00 | Promedio: 307.22
-  Longitud: 500 | Promedio: 307.2
-  Pérdida: 104.8636 | Epsilon: 0.0100
-  Tasa de éxito: 35.00%
+  Recompensa: 500.00 | Promedio: 329.51
+  Longitud: 500 | Promedio: 329.5
+  Pérdida: 45.7850 | Epsilon: 0.0100
+  Tasa de éxito: 33.39%
 ------------------------------------------------------------
 Episodio 570/1000
-  Recompensa: 500.00 | Promedio: 309.48
-  Longitud: 500 | Promedio: 309.5
-  Pérdida: 55.6595 | Epsilon: 0.0100
-  Tasa de éxito: 36.14%
+  Recompensa: 61.00 | Promedio: 324.38
+  Longitud: 61 | Promedio: 324.4
+  Pérdida: 68.2047 | Epsilon: 0.0100
+  Tasa de éxito: 34.21%
 ------------------------------------------------------------
 Episodio 580/1000
-  Recompensa: 119.00 | Promedio: 331.94
-  Longitud: 119 | Promedio: 331.9
-  Pérdida: 713.4659 | Epsilon: 0.0100
-  Tasa de éxito: 36.90%
+  Recompensa: 183.00 | Promedio: 337.10
+  Longitud: 183 | Promedio: 337.1
+  Pérdida: 41.5736 | Epsilon: 0.0100
+  Tasa de éxito: 34.66%
 ------------------------------------------------------------
 Episodio 590/1000
-  Recompensa: 8.00 | Promedio: 322.17
-  Longitud: 8 | Promedio: 322.2
-  Pérdida: 2722.0230 | Epsilon: 0.0100
-  Tasa de éxito: 36.61%
+  Recompensa: 500.00 | Promedio: 376.28
+  Longitud: 500 | Promedio: 376.3
+  Pérdida: 46.1187 | Epsilon: 0.0100
+  Tasa de éxito: 35.08%
 ------------------------------------------------------------
 Episodio 600/1000
-  Recompensa: 262.00 | Promedio: 289.83
-  Longitud: 262 | Promedio: 289.8
-  Pérdida: 3217.1141 | Epsilon: 0.0100
-  Tasa de éxito: 36.00%
+  Recompensa: 500.00 | Promedio: 418.27
+  Longitud: 500 | Promedio: 418.3
+  Pérdida: 44.3666 | Epsilon: 0.0100
+  Tasa de éxito: 35.83%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_600.pt
 ------------------------------------------------------------
 Episodio 610/1000
-  Recompensa: 114.00 | Promedio: 289.04
-  Longitud: 114 | Promedio: 289.0
-  Pérdida: 924.2338 | Epsilon: 0.0100
-  Tasa de éxito: 36.23%
+  Recompensa: 500.00 | Promedio: 428.78
+  Longitud: 500 | Promedio: 428.8
+  Pérdida: 47.0658 | Epsilon: 0.0100
+  Tasa de éxito: 36.56%
 ------------------------------------------------------------
 Episodio 620/1000
-  Recompensa: 500.00 | Promedio: 296.49
-  Longitud: 500 | Promedio: 296.5
-  Pérdida: 62.1326 | Epsilon: 0.0100
+  Recompensa: 500.00 | Promedio: 434.73
+  Longitud: 500 | Promedio: 434.7
+  Pérdida: 41.3701 | Epsilon: 0.0100
   Tasa de éxito: 37.26%
 ------------------------------------------------------------
 Episodio 630/1000
-  Recompensa: 500.00 | Promedio: 307.23
-  Longitud: 500 | Promedio: 307.2
-  Pérdida: 31.9875 | Epsilon: 0.0100
-  Tasa de éxito: 37.30%
+  Recompensa: 500.00 | Promedio: 450.97
+  Longitud: 500 | Promedio: 451.0
+  Pérdida: 32.0521 | Epsilon: 0.0100
+  Tasa de éxito: 38.10%
 ------------------------------------------------------------
 Episodio 640/1000
-  Recompensa: 500.00 | Promedio: 340.79
-  Longitud: 500 | Promedio: 340.8
-  Pérdida: 32.9478 | Epsilon: 0.0100
-  Tasa de éxito: 37.97%
+  Recompensa: 293.00 | Promedio: 443.88
+  Longitud: 293 | Promedio: 443.9
+  Pérdida: 45.9784 | Epsilon: 0.0100
+  Tasa de éxito: 38.59%
 ------------------------------------------------------------
 Episodio 650/1000
-  Recompensa: 500.00 | Promedio: 372.04
-  Longitud: 500 | Promedio: 372.0
-  Pérdida: 47.6611 | Epsilon: 0.0100
-  Tasa de éxito: 37.85%
+  Recompensa: 500.00 | Promedio: 444.39
+  Longitud: 500 | Promedio: 444.4
+  Pérdida: 47.9746 | Epsilon: 0.0100
+  Tasa de éxito: 39.54%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_650.pt
 ------------------------------------------------------------
 Episodio 660/1000
-  Recompensa: 500.00 | Promedio: 375.03
-  Longitud: 500 | Promedio: 375.0
-  Pérdida: 21.5069 | Epsilon: 0.0100
-  Tasa de éxito: 38.33%
+  Recompensa: 500.00 | Promedio: 422.63
+  Longitud: 500 | Promedio: 422.6
+  Pérdida: 49.1739 | Epsilon: 0.0100
+  Tasa de éxito: 39.39%
 ------------------------------------------------------------
 Episodio 670/1000
-  Recompensa: 500.00 | Promedio: 372.37
-  Longitud: 500 | Promedio: 372.4
-  Pérdida: 16.8000 | Epsilon: 0.0100
-  Tasa de éxito: 38.66%
+  Recompensa: 192.00 | Promedio: 421.84
+  Longitud: 192 | Promedio: 421.8
+  Pérdida: 77.2026 | Epsilon: 0.0100
+  Tasa de éxito: 39.70%
 ------------------------------------------------------------
 Episodio 680/1000
-  Recompensa: 500.00 | Promedio: 372.96
-  Longitud: 500 | Promedio: 373.0
-  Pérdida: 18.3515 | Epsilon: 0.0100
-  Tasa de éxito: 39.12%
+  Recompensa: 500.00 | Promedio: 421.44
+  Longitud: 500 | Promedio: 421.4
+  Pérdida: 53.0831 | Epsilon: 0.0100
+  Tasa de éxito: 39.85%
 ------------------------------------------------------------
 Episodio 690/1000
-  Recompensa: 449.00 | Promedio: 404.07
-  Longitud: 449 | Promedio: 404.1
-  Pérdida: 29.2430 | Epsilon: 0.0100
-  Tasa de éxito: 39.86%
+  Recompensa: 500.00 | Promedio: 430.84
+  Longitud: 500 | Promedio: 430.8
+  Pérdida: 37.3615 | Epsilon: 0.0100
+  Tasa de éxito: 40.58%
 ------------------------------------------------------------
 Episodio 700/1000
-  Recompensa: 10.00 | Promedio: 405.40
-  Longitud: 10 | Promedio: 405.4
-  Pérdida: 122786.3930 | Epsilon: 0.0100
-  Tasa de éxito: 39.29%
+  Recompensa: 500.00 | Promedio: 433.89
+  Longitud: 500 | Promedio: 433.9
+  Pérdida: 26.0695 | Epsilon: 0.0100
+  Tasa de éxito: 41.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_700.pt
 ------------------------------------------------------------
 Episodio 710/1000
-  Recompensa: 8.00 | Promedio: 371.85
-  Longitud: 8 | Promedio: 371.9
-  Pérdida: 71485.0015 | Epsilon: 0.0100
-  Tasa de éxito: 38.73%
+  Recompensa: 500.00 | Promedio: 439.78
+  Longitud: 500 | Promedio: 439.8
+  Pérdida: 17.0330 | Epsilon: 0.0100
+  Tasa de éxito: 41.83%
 ------------------------------------------------------------
 Episodio 720/1000
-  Recompensa: 8.00 | Promedio: 322.78
-  Longitud: 8 | Promedio: 322.8
-  Pérdida: 1612068.6382 | Epsilon: 0.0100
-  Tasa de éxito: 38.19%
+  Recompensa: 500.00 | Promedio: 438.68
+  Longitud: 500 | Promedio: 438.7
+  Pérdida: 28.8582 | Epsilon: 0.0100
+  Tasa de éxito: 42.50%
 ------------------------------------------------------------
 Episodio 730/1000
-  Recompensa: 8.00 | Promedio: 285.13
-  Longitud: 8 | Promedio: 285.1
-  Pérdida: 2556155.9541 | Epsilon: 0.0100
-  Tasa de éxito: 37.67%
+  Recompensa: 500.00 | Promedio: 433.40
+  Longitud: 500 | Promedio: 433.4
+  Pérdida: 31.8950 | Epsilon: 0.0100
+  Tasa de éxito: 43.01%
 ------------------------------------------------------------
 Episodio 740/1000
-  Recompensa: 9.00 | Promedio: 238.97
-  Longitud: 9 | Promedio: 239.0
-  Pérdida: 1284650.0174 | Epsilon: 0.0100
-  Tasa de éxito: 37.16%
+  Recompensa: 371.00 | Promedio: 434.18
+  Longitud: 371 | Promedio: 434.2
+  Pérdida: 35.8409 | Epsilon: 0.0100
+  Tasa de éxito: 43.24%
 ------------------------------------------------------------
 Episodio 750/1000
-  Recompensa: 10.00 | Promedio: 197.08
-  Longitud: 10 | Promedio: 197.1
-  Pérdida: 1444298.0875 | Epsilon: 0.0100
-  Tasa de éxito: 36.67%
+  Recompensa: 500.00 | Promedio: 426.44
+  Longitud: 500 | Promedio: 426.4
+  Pérdida: 35.5142 | Epsilon: 0.0100
+  Tasa de éxito: 43.60%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_750.pt
 ------------------------------------------------------------
 Episodio 760/1000
-  Recompensa: 9.00 | Promedio: 150.86
-  Longitud: 9 | Promedio: 150.9
-  Pérdida: 2826188.3014 | Epsilon: 0.0100
-  Tasa de éxito: 36.18%
+  Recompensa: 500.00 | Promedio: 448.20
+  Longitud: 500 | Promedio: 448.2
+  Pérdida: 39.2004 | Epsilon: 0.0100
+  Tasa de éxito: 44.34%
 ------------------------------------------------------------
 Episodio 770/1000
-  Recompensa: 8.00 | Promedio: 106.24
-  Longitud: 8 | Promedio: 106.2
-  Pérdida: 1114856.3015 | Epsilon: 0.0100
-  Tasa de éxito: 35.71%
+  Recompensa: 500.00 | Promedio: 452.91
+  Longitud: 500 | Promedio: 452.9
+  Pérdida: 28.4210 | Epsilon: 0.0100
+  Tasa de éxito: 44.81%
 ------------------------------------------------------------
 Episodio 780/1000
-  Recompensa: 11.00 | Promedio: 63.59
-  Longitud: 11 | Promedio: 63.6
-  Pérdida: 673864.4866 | Epsilon: 0.0100
-  Tasa de éxito: 35.26%
+  Recompensa: 500.00 | Promedio: 460.90
+  Longitud: 500 | Promedio: 460.9
+  Pérdida: 34.2756 | Epsilon: 0.0100
+  Tasa de éxito: 45.26%
 ------------------------------------------------------------
 Episodio 790/1000
-  Recompensa: 12.00 | Promedio: 15.12
-  Longitud: 12 | Promedio: 15.1
-  Pérdida: 130636.0218 | Epsilon: 0.0100
-  Tasa de éxito: 34.81%
+  Recompensa: 340.00 | Promedio: 456.24
+  Longitud: 340 | Promedio: 456.2
+  Pérdida: 25.6679 | Epsilon: 0.0100
+  Tasa de éxito: 45.57%
 ------------------------------------------------------------
 Episodio 800/1000
-  Recompensa: 11.00 | Promedio: 11.29
-  Longitud: 11 | Promedio: 11.3
-  Pérdida: 585624.9268 | Epsilon: 0.0100
-  Tasa de éxito: 34.38%
+  Recompensa: 500.00 | Promedio: 453.84
+  Longitud: 500 | Promedio: 453.8
+  Pérdida: 27.8079 | Epsilon: 0.0100
+  Tasa de éxito: 46.00%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_800.pt
 ------------------------------------------------------------
 Episodio 810/1000
-  Recompensa: 13.00 | Promedio: 11.60
-  Longitud: 13 | Promedio: 11.6
-  Pérdida: 408052.5844 | Epsilon: 0.0100
-  Tasa de éxito: 33.95%
+  Recompensa: 500.00 | Promedio: 440.01
+  Longitud: 500 | Promedio: 440.0
+  Pérdida: 42.4911 | Epsilon: 0.0100
+  Tasa de éxito: 46.05%
 ------------------------------------------------------------
 Episodio 820/1000
-  Recompensa: 29.00 | Promedio: 12.40
-  Longitud: 29 | Promedio: 12.4
-  Pérdida: 760134.0771 | Epsilon: 0.0100
-  Tasa de éxito: 33.54%
+  Recompensa: 500.00 | Promedio: 439.69
+  Longitud: 500 | Promedio: 439.7
+  Pérdida: 33.5426 | Epsilon: 0.0100
+  Tasa de éxito: 46.46%
 ------------------------------------------------------------
 Episodio 830/1000
-  Recompensa: 93.00 | Promedio: 24.17
-  Longitud: 93 | Promedio: 24.2
-  Pérdida: 123796.5635 | Epsilon: 0.0100
-  Tasa de éxito: 33.25%
+  Recompensa: 500.00 | Promedio: 434.87
+  Longitud: 500 | Promedio: 434.9
+  Pérdida: 28.9447 | Epsilon: 0.0100
+  Tasa de éxito: 46.39%
 ------------------------------------------------------------
 Episodio 840/1000
-  Recompensa: 109.00 | Promedio: 35.60
-  Longitud: 109 | Promedio: 35.6
-  Pérdida: 67558.2172 | Epsilon: 0.0100
-  Tasa de éxito: 32.86%
+  Recompensa: 500.00 | Promedio: 443.13
+  Longitud: 500 | Promedio: 443.1
+  Pérdida: 24.9923 | Epsilon: 0.0100
+  Tasa de éxito: 47.02%
 ------------------------------------------------------------
 Episodio 850/1000
-  Recompensa: 500.00 | Promedio: 59.53
-  Longitud: 500 | Promedio: 59.5
-  Pérdida: 6668.2365 | Epsilon: 0.0100
-  Tasa de éxito: 32.59%
+  Recompensa: 500.00 | Promedio: 446.92
+  Longitud: 500 | Promedio: 446.9
+  Pérdida: 27.5794 | Epsilon: 0.0100
+  Tasa de éxito: 47.41%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_850.pt
 ------------------------------------------------------------
 Episodio 860/1000
-  Recompensa: 500.00 | Promedio: 108.60
-  Longitud: 500 | Promedio: 108.6
-  Pérdida: 2691.3959 | Epsilon: 0.0100
-  Tasa de éxito: 33.37%
+  Recompensa: 500.00 | Promedio: 445.45
+  Longitud: 500 | Promedio: 445.4
+  Pérdida: 25.8469 | Epsilon: 0.0100
+  Tasa de éxito: 47.79%
 ------------------------------------------------------------
 Episodio 870/1000
-  Recompensa: 205.00 | Promedio: 152.93
-  Longitud: 205 | Promedio: 152.9
-  Pérdida: 860.7398 | Epsilon: 0.0100
-  Tasa de éxito: 34.02%
+  Recompensa: 500.00 | Promedio: 443.76
+  Longitud: 500 | Promedio: 443.8
+  Pérdida: 32.4971 | Epsilon: 0.0100
+  Tasa de éxito: 48.16%
 ------------------------------------------------------------
 Episodio 880/1000
-  Recompensa: 167.00 | Promedio: 174.67
-  Longitud: 167 | Promedio: 174.7
-  Pérdida: 756.0815 | Epsilon: 0.0100
-  Tasa de éxito: 33.64%
+  Recompensa: 500.00 | Promedio: 447.46
+  Longitud: 500 | Promedio: 447.5
+  Pérdida: 38.6956 | Epsilon: 0.0100
+  Tasa de éxito: 48.64%
 ------------------------------------------------------------
 Episodio 890/1000
-  Recompensa: 129.00 | Promedio: 189.27
-  Longitud: 129 | Promedio: 189.3
-  Pérdida: 522.8748 | Epsilon: 0.0100
-  Tasa de éxito: 33.26%
+  Recompensa: 500.00 | Promedio: 452.58
+  Longitud: 500 | Promedio: 452.6
+  Pérdida: 33.4869 | Epsilon: 0.0100
+  Tasa de éxito: 49.21%
 ------------------------------------------------------------
 Episodio 900/1000
-  Recompensa: 152.00 | Promedio: 203.55
-  Longitud: 152 | Promedio: 203.6
-  Pérdida: 238.0663 | Epsilon: 0.0100
-  Tasa de éxito: 32.89%
+  Recompensa: 256.00 | Promedio: 455.06
+  Longitud: 256 | Promedio: 455.1
+  Pérdida: 34.4964 | Epsilon: 0.0100
+  Tasa de éxito: 49.56%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_900.pt
 ------------------------------------------------------------
 Episodio 910/1000
-  Recompensa: 162.00 | Promedio: 218.16
-  Longitud: 162 | Promedio: 218.2
-  Pérdida: 104.6975 | Epsilon: 0.0100
-  Tasa de éxito: 32.53%
+  Recompensa: 271.00 | Promedio: 465.00
+  Longitud: 271 | Promedio: 465.0
+  Pérdida: 33.1758 | Epsilon: 0.0100
+  Tasa de éxito: 49.78%
 ------------------------------------------------------------
 Episodio 920/1000
-  Recompensa: 309.00 | Promedio: 235.91
-  Longitud: 309 | Promedio: 235.9
-  Pérdida: 57.5074 | Epsilon: 0.0100
-  Tasa de éxito: 32.17%
+  Recompensa: 500.00 | Promedio: 467.82
+  Longitud: 500 | Promedio: 467.8
+  Pérdida: 30.3178 | Epsilon: 0.0100
+  Tasa de éxito: 50.22%
 ------------------------------------------------------------
 Episodio 930/1000
-  Recompensa: 500.00 | Promedio: 265.98
-  Longitud: 500 | Promedio: 266.0
-  Pérdida: 85.2073 | Epsilon: 0.0100
-  Tasa de éxito: 32.58%
+  Recompensa: 500.00 | Promedio: 467.18
+  Longitud: 500 | Promedio: 467.2
+  Pérdida: 37.7122 | Epsilon: 0.0100
+  Tasa de éxito: 50.32%
 ------------------------------------------------------------
 Episodio 940/1000
-  Recompensa: 500.00 | Promedio: 291.13
-  Longitud: 500 | Promedio: 291.1
-  Pérdida: 58.5252 | Epsilon: 0.0100
-  Tasa de éxito: 32.87%
+  Recompensa: 500.00 | Promedio: 467.18
+  Longitud: 500 | Promedio: 467.2
+  Pérdida: 36.3805 | Epsilon: 0.0100
+  Tasa de éxito: 50.85%
 ------------------------------------------------------------
 Episodio 950/1000
-  Recompensa: 475.00 | Promedio: 309.27
-  Longitud: 475 | Promedio: 309.3
-  Pérdida: 40.4132 | Epsilon: 0.0100
-  Tasa de éxito: 33.16%
+  Recompensa: 500.00 | Promedio: 471.13
+  Longitud: 500 | Promedio: 471.1
+  Pérdida: 47.6450 | Epsilon: 0.0100
+  Tasa de éxito: 51.37%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_950.pt
 ------------------------------------------------------------
 Episodio 960/1000
-  Recompensa: 500.00 | Promedio: 309.27
-  Longitud: 500 | Promedio: 309.3
-  Pérdida: 31.8025 | Epsilon: 0.0100
-  Tasa de éxito: 33.85%
+  Recompensa: 500.00 | Promedio: 472.60
+  Longitud: 500 | Promedio: 472.6
+  Pérdida: 60.9553 | Epsilon: 0.0100
+  Tasa de éxito: 51.88%
 ------------------------------------------------------------
 Episodio 970/1000
-  Recompensa: 500.00 | Promedio: 311.40
-  Longitud: 500 | Promedio: 311.4
-  Pérdida: 26.3909 | Epsilon: 0.0100
-  Tasa de éxito: 34.43%
+  Recompensa: 108.00 | Promedio: 468.05
+  Longitud: 108 | Promedio: 468.1
+  Pérdida: 95.5197 | Epsilon: 0.0100
+  Tasa de éxito: 52.06%
 ------------------------------------------------------------
 Episodio 980/1000
-  Recompensa: 500.00 | Promedio: 330.15
-  Longitud: 500 | Promedio: 330.1
-  Pérdida: 37.5553 | Epsilon: 0.0100
-  Tasa de éxito: 34.49%
+  Recompensa: 10.00 | Promedio: 420.42
+  Longitud: 10 | Promedio: 420.4
+  Pérdida: 1744.9064 | Epsilon: 0.0100
+  Tasa de éxito: 51.53%
 ------------------------------------------------------------
 Episodio 990/1000
-  Recompensa: 376.00 | Promedio: 348.95
-  Longitud: 376 | Promedio: 348.9
-  Pérdida: 35.2751 | Epsilon: 0.0100
-  Tasa de éxito: 34.44%
+  Recompensa: 368.00 | Promedio: 389.31
+  Longitud: 368 | Promedio: 389.3
+  Pérdida: 345.5228 | Epsilon: 0.0100
+  Tasa de éxito: 51.21%
 ------------------------------------------------------------
 Episodio 1000/1000
-  Recompensa: 500.00 | Promedio: 362.00
-  Longitud: 500 | Promedio: 362.0
-  Pérdida: 64.3398 | Epsilon: 0.0100
-  Tasa de éxito: 34.60%
+  Recompensa: 10.00 | Promedio: 355.35
+  Longitud: 10 | Promedio: 355.4
+  Pérdida: 187.8111 | Epsilon: 0.0100
+  Tasa de éxito: 50.70%
 ------------------------------------------------------------
 Checkpoint guardado: checkpoints/dqn_episode_1000.pt
 ------------------------------------------------------------
@@ -677,7 +672,7 @@ Modelo final guardado: checkpoints/dqn_final.pt
 Métricas de entrenamiento guardadas: metrics/training_metrics.pkl
 
 Estadísticas de entrenamiento:
-  Recompensa promedio: 261.47
-  Longitud promedio del episodio: 261.5
-  Tasa de éxito: 34.60%
+  Recompensa promedio: 340.16
+  Longitud promedio del episodio: 340.2
+  Tasa de éxito: 50.70%
   Epsilon final: 0.0100
