@@ -24,8 +24,11 @@ def save_checkpoint(model, optimizer, episode, metrics, filepath):
 
 
 def load_checkpoint(filepath, model, optimizer=None):
-    # Cargar checkpoint del modelo:
-    # Returna tupla de (episodio, métricas)
+    # Cargar checkpoint del modelo
+    # filepath: Ruta al archivo de checkpoint
+    # model: Instancia del modelo para cargar pesos
+    # optimizer: Opcional, optimizador para restaurar estado
+    # Returns: Tupla de (episodio, métricas)
     checkpoint = torch.load(filepath)
     model.load_state_dict(checkpoint['model_state_dict'])
     if optimizer is not None:
@@ -34,6 +37,9 @@ def load_checkpoint(filepath, model, optimizer=None):
 
 
 def save_metrics(metrics, filepath):
+    # Guardar métricas de entrenamiento en archivo JSON
+    # metrics: Diccionario de métricas
+    # filepath: Ruta para guardar el archivo
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
 
     # Convertir arrays numpy a listas para serialización JSON
@@ -51,6 +57,9 @@ def save_metrics(metrics, filepath):
 
 
 def load_metrics(filepath):
+    # Cargar métricas desde archivo JSON
+    # filepath: Ruta al archivo de métricas
+    # Returns: Diccionario de métricas
     with open(filepath, 'r') as f:
         return json.load(f)
 
@@ -74,7 +83,7 @@ def compute_statistics(data, window=50):
 
 def get_device_info():
     # Obtener información del dispositivo de cómputo disponible
-    # retorna diccionario con información del dispositivo
+    # Returns: Diccionario con información del dispositivo
     if torch.cuda.is_available():
         device_name = torch.cuda.get_device_name(0)
         device_memory = torch.cuda.get_device_properties(0).total_memory / 1e9

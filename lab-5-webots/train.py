@@ -113,7 +113,7 @@ def train_dqn():
                 'episode_losses': episode_losses,
                 'episode': episode + 1
             }
-            save_checkpoint(agent, metrics, checkpoint_path)
+            save_checkpoint(agent.policy_net, agent.optimizer, episode + 1, metrics, checkpoint_path)
             print(f"Checkpoint guardado: {checkpoint_path}")
             print("-" * 60)
 
@@ -127,7 +127,7 @@ def train_dqn():
         'episode_losses': episode_losses,
         'episode': config.NUM_EPISODES
     }
-    save_checkpoint(agent, final_metrics, final_checkpoint)
+    save_checkpoint(agent.policy_net, agent.optimizer, config.NUM_EPISODES, final_metrics, final_checkpoint)
     print(f"Modelo final guardado: {final_checkpoint}")
 
     metrics_file = "metrics/training_metrics.pkl"
@@ -145,8 +145,8 @@ def train_dqn():
 
 
 if __name__ == "__main__":
-    # Create directories for checkpoints and metrics
+    # Crear directorios para checkpoints y métricas
     os.makedirs("checkpoints", exist_ok=True)
     os.makedirs("metrics", exist_ok=True)
-    
+
     train_dqn()
