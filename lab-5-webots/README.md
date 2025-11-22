@@ -4,7 +4,7 @@ Implementación de Deep Q-Network (DQN) usando PyTorch con aceleración CUDA par
 
 ## Resumen
 
-Este laboratorio demuestra aprendizaje por refuerzo usando el algoritmo DQN en el entorno CartPole-v1 de Gymnasium. La implementación soporta aceleración GPU a través de CUDA, haciéndolo ideal para entrenamiento en las instancias GPU gratuitas de Google Colab.
+Este laboratorio demuestra aprendizaje por refuerzo usando el algoritmo DQN en el entorno CartPole-v1 de Gymnasium. La implementación soporta aceleración GPU a través de CUDA.
 
 ## Características
 
@@ -41,21 +41,12 @@ dqn_gymnasium/
 
 ## Instrucciones de Configuración
 
-### Opción 1: Google Colab (Recomendado)
+### Google Colab
 
 1. Abre el notebook de Colab: [dqn_training.ipynb](dqn_gymnasium/dqn_training.ipynb)
-2. Asegúrate de que el runtime GPU esté habilitado:
-   - Runtime → Change runtime type → Hardware accelerator → GPU
-3. Ejecuta todas las celdas secuencialmente
+2. Ejecuta todas las celdas secuencialmente.
 
-El notebook maneja:
-- Instalación de dependencias
-- Clonado del repositorio
-- Ejecución del entrenamiento
-- Generación de visualizaciones
-- Descarga de resultados
-
-### Opción 2: Entorno Local
+### Entorno Local
 
 1. Clona el repositorio:
 ```bash
@@ -110,10 +101,6 @@ El script de entrenamiento realiza los siguientes pasos:
 4. **Puntos de Control**: Guardar modelos y métricas cada 50 episodios
 5. **Guardado Final**: Guardar modelo completado y métricas completas
 
-### Tiempo Esperado de Entrenamiento
-
-- **Google Colab (GPU)**: ~10-15 minutos para 500 episodios
-- **Local (CPU)**: ~30-45 minutos para 500 episodios
 
 ## Resultados y Visualización
 
@@ -155,7 +142,3 @@ La implementación sigue el algoritmo DQN estándar:
 - **Capa de Entrada**: Dimensión de estado (4 para CartPole)
 - **Capas Ocultas**: Dos capas de 128 neuronas con activación ReLU
 - **Capa de Salida**: Dimensión de acción (2 para CartPole)
-
-## Licencia
-
-Este proyecto es parte del curso de Laboratorio de Robótica en EPCC.
