@@ -112,7 +112,7 @@ class DQNAgent:
         # Muestrear batch
         states, actions, rewards, next_states, dones = self.memory.sample(self.batch_size)
         
-        # Convertir a tensores
+        # Convertir a tensores y mover a GPU
         states = torch.FloatTensor(states).to(self.device)
         actions = torch.LongTensor(actions).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
@@ -140,21 +140,23 @@ class DQNAgent:
         self.optimizer.zero_grad()
         loss.backward()
         # Gradient clipping para estabilidad
-        torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), max_norm=10.0)
+        torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), max_norm=1.0)
         self.optimizer.step()
         
         # Actualizar epsilon
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
         
-        # Actualizar red objetivo periódicamente
+        # Incrementar pasos
         self.steps += 1
-        if self.steps % self.target_update_freq == 0:
-            self.target_net.load_state_dict(self.policy_net.state_dict())
         
         loss_value = loss.item()
         self.losses.append(loss_value)
         
         return loss_value
+    
+    def update_target_network(self):
+        # Actualizar red objetivo con pesos de red de política
+        self.target_net.load_state_dict(self.policy_net.state_dict())
     
     def store_transition(self, state, action, reward, next_state, done):
         # Almacenar una transición en el buffer de replay.

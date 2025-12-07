@@ -20,10 +20,13 @@ def train_agent(use_double_dqn=False, verbose=True):
     
     # Información del dispositivo
     if verbose:
+        print(f"Entrenando {algorithm_name}")
         device_info = get_device_info()
-        print(f"\nEntrenando {algorithm_name}")
         print(f"Dispositivo: {device_info['device_name']}")
         print(f"CUDA disponible: {device_info['cuda_available']}")
+        if device_info['cuda_available']:
+            print(f"GPU: {torch.cuda.get_device_name(0)}")
+            print(f"Memoria GPU disponible: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
 
     
     # Crear entorno
@@ -36,6 +39,9 @@ def train_agent(use_double_dqn=False, verbose=True):
         print(f"Dimensión del estado: {state_dim}")
         print(f"Dimensión de la acción: {action_dim}")
         print(f"Episodios: {config.NUM_EPISODES}")
+        print(f"Batch size: {config.BATCH_SIZE}")
+        print(f"Memory size: {config.MEMORY_SIZE}")
+        print(f"Learning rate: {config.LEARNING_RATE}")
     
     # Inicializar agente
     agent = DQNAgent(
@@ -55,6 +61,8 @@ def train_agent(use_double_dqn=False, verbose=True):
     
     if verbose:
         print("Iniciando entrenamiento...")
+        print(f"Llenando buffer de experiencias (min {config.BATCH_SIZE} transiciones)...")
+    
     
     # Bucle de entrenamiento
     for episode in range(config.NUM_EPISODES):
@@ -108,6 +116,10 @@ def train_agent(use_double_dqn=False, verbose=True):
         if episode_length >= 500:
             success_count += 1
         
+        # Actualizar red objetivo periódicamente
+        if (episode + 1) % config.TARGET_UPDATE_FREQ == 0:
+            agent.update_target_network()
+        
         # Calcular promedios móviles
         window = min(100, episode + 1)
         avg_reward = np.mean(episode_rewards[-window:])
@@ -127,13 +139,23 @@ def train_agent(use_double_dqn=False, verbose=True):
         # Imprimir progreso
         if verbose and (episode + 1) % config.PRINT_EVERY == 0:
             success_rate = (success_count / (episode + 1)) * 100
-            print_training_progress(
-                episode + 1, config.NUM_EPISODES,
-                episode_reward, avg_reward,
-                episode_length, avg_length,
-                avg_loss, agent.epsilon, success_rate,
-                algorithm_name
-            )
+            
+            # Calcular uso de memoria GPU
+            if torch.cuda.is_available():
+                mem_allocated = torch.cuda.memory_allocated() / 1e6  # MB
+                mem_reserved = torch.cuda.memory_reserved() / 1e6  # MB
+                gpu_info = f"| GPU: {mem_allocated:.0f}/{mem_reserved:.0f}MB"
+            else:
+                gpu_info = ""
+            
+            print(f"Ep {episode+1:>4}/{config.NUM_EPISODES} | "
+                  f"R: {episode_reward:>3.0f} | "
+                  f"AvgR: {avg_reward:>6.1f} | "
+                  f"L: {episode_length:>3} | "
+                  f"AvgL: {avg_length:>6.1f} | "
+                  f"Loss: {avg_loss:>6.4f} | "
+                  f"ε: {agent.epsilon:.4f} | "
+                  f"Success: {success_rate:>5.1f}% {gpu_info}")
         
         # Guardar checkpoint
         if (episode + 1) % config.SAVE_EVERY == 0:

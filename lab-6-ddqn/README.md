@@ -1,38 +1,12 @@
 # Lab 6: Comparación DQN vs Double DQN
 
-Este proyecto implementa y compara Deep Q-Network (DQN) y Double DQN en el entorno CartPole-v1 de Gymnasium.
+Este proyecto implementa y compara Deep Q-Network (DQN) y Double DQN en el entorno CartPole-v1 de Gymnasium usando **PyTorch con CUDA (GPU obligatoria)**.
 
-## Descripción
+## ⚠️ Requisitos IMPORTANTES
 
-Double DQN es una mejora sobre DQN estándar que reduce el problema de sobreestimación de valores Q mediante el desacoplamiento de la selección y evaluación de acciones.
-
-### Diferencia Clave
-
-**DQN estándar:**
-```
-target = r + γ * max_a' Q(s', a'; θ⁻)
-```
-
-**Double DQN:**
-```
-a* = argmax_a' Q(s', a'; θ)  # Red de política selecciona
-target = r + γ * Q(s', a*; θ⁻)  # Red objetivo evalúa
-```
-
-## Estructura del Proyecto
-
-```
-lab-6-ddqn/
-├── config.py              # Hiperparámetros compartidos
-├── dqn_agent.py           # Agente unificado DQN/DDQN
-├── utils.py               # Utilidades (guardar/cargar)
-├── train.py               # Script de entrenamiento
-├── visualize.py           # Gráficos comparativos
-├── ddqn_comparison.ipynb  # Notebook con experimentos
-├── main.tex               # Informe LaTeX
-├── requirements.txt       # Dependencias
-└── README.md              # Este archivo
-```
+- **GPU con CUDA es OBLIGATORIA** - El proyecto está optimizado para aprovechar aceleración GPU
+- PyTorch con CUDA instalado
+- CUDA Toolkit 11.8 o superior
 
 ## Instalación
 
@@ -42,8 +16,28 @@ python -m venv venv
 source venv/bin/activate  # Linux/Mac
 # venv\Scripts\activate   # Windows
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Instalar PyTorch con CUDA (ejemplo para CUDA 11.8)
+pip install torch --index-url https://download.pytorch.org/whl/cu118
+
+# Instalar otras dependencias
+pip install gymnasium numpy matplotlib
+```
+
+## Verificación de CUDA
+
+**PASO IMPORTANTE:** Antes de entrenar, verifica que CUDA esté correctamente configurado:
+
+```bash
+python verify_cuda.py
+```
+
+Deberías ver:
+```
+✓ PyTorch version: 2.x.x+cuXXX
+✓ CUDA disponible: True
+✓ Dispositivo GPU: Tesla T4 (o tu GPU)
+✓ Memoria GPU total: X.XX GB
+✅ TODAS LAS VERIFICACIONES PASARON
 ```
 
 ## Uso
@@ -72,20 +66,33 @@ from visualize import generate_all_comparisons
 generate_all_comparisons('dqn_metrics.pkl', 'ddqn_metrics.pkl')
 ```
 
-## Hiperparámetros
+## Hiperparámetros Optimizados para GPU
 
-| Parámetro | Valor |
-|-----------|-------|
-| Episodios | 500 |
-| Learning Rate | 0.001 |
-| Gamma (descuento) | 0.99 |
-| Batch Size | 64 |
-| Memory Size | 10,000 |
-| Epsilon inicial | 1.0 |
-| Epsilon final | 0.01 |
-| Epsilon decay | 0.995 |
-| Hidden Layers | [128, 128] |
-| Target Update Freq | 10 episodios |
+| Parámetro | Valor | Nota |
+|-----------|-------|------|
+| Episodios | **2000** | ↑ Aprovecha velocidad GPU |
+| Learning Rate | **0.0005** | ↓ Más estable |
+| Gamma (descuento) | 0.99 | - |
+| Batch Size | **128** | ↑ Mejor uso GPU |
+| Memory Size | **50,000** | ↑ Más experiencia |
+| Epsilon inicial | 1.0 | - |
+| Epsilon final | 0.01 | - |
+| Epsilon decay | **0.9995** | ↓ Decay más lento |
+| Hidden Layers | **[256, 256, 128]** | ↑ Red más profunda |
+| Target Update Freq | **50 episodios** | ↑ Más estabilidad |
+
+## Diferencias clave DQN vs Double DQN
+
+**DQN estándar:**
+```python
+target = r + γ * max_a' Q(s', a'; θ⁻)
+```
+
+**Double DQN:**
+```python
+a* = argmax_a' Q(s', a'; θ)  # Red de política selecciona
+target = r + γ * Q(s', a*; θ⁻)  # Red objetivo evalúa
+```
 
 ## Métricas de Evaluación
 
