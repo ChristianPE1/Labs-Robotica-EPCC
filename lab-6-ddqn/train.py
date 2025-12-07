@@ -61,7 +61,23 @@ def train_agent(use_double_dqn=False, verbose=True):
     
     if verbose:
         print("Iniciando entrenamiento...")
-        print(f"Llenando buffer de experiencias (min {config.BATCH_SIZE} transiciones)...")
+        print("Llenando buffer de experiencias...")
+    
+    # Llenar buffer inicialmente con acciones aleatorias
+    state, _ = env.reset()
+    for _ in range(config.BATCH_SIZE):
+        action = env.action_space.sample()  # Acción aleatoria
+        next_state, reward, done, truncated, _ = env.step(action)
+        agent.store_transition(state, action, reward, next_state, done or truncated)
+        if done or truncated:
+            state, _ = env.reset()
+        else:
+            state = next_state
+    
+    if verbose:
+        print(f"Buffer inicial lleno con {len(agent.memory)} transiciones.")
+        print(f"Red en dispositivo: {next(agent.policy_net.parameters()).device}")
+        print(f"Optimizador en dispositivo: {agent.optimizer.param_groups[0]['params'][0].device}")
     
     
     # Bucle de entrenamiento
@@ -96,6 +112,8 @@ def train_agent(use_double_dqn=False, verbose=True):
             loss = agent.train_step()
             if loss is not None:
                 episode_loss_values.append(loss)
+                if episode % 100 == 0:  # Debug cada 100 episodios
+                    print(f"Debug: Loss = {loss:.4f}, Buffer size = {len(agent.memory)}, Epsilon = {agent.epsilon:.4f}")
             
             # Actualizar estado y métricas
             state = next_state
