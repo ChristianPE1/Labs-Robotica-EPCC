@@ -112,8 +112,8 @@ def train_agent(use_double_dqn=False, verbose=True):
             loss = agent.train_step()
             if loss is not None:
                 episode_loss_values.append(loss)
-                if episode % 100 == 0:  # Debug cada 100 episodios
-                    print(f"Debug: Loss = {loss:.4f}, Buffer size = {len(agent.memory)}, Epsilon = {agent.epsilon:.4f}")
+                # Soft update de target network en cada paso de entrenamiento
+                agent.update_target_network()
             
             # Actualizar estado y métricas
             state = next_state
@@ -133,10 +133,6 @@ def train_agent(use_double_dqn=False, verbose=True):
         # Contar éxitos
         if episode_length >= 500:
             success_count += 1
-        
-        # Actualizar red objetivo periódicamente
-        if (episode + 1) % config.TARGET_UPDATE_FREQ == 0:
-            agent.update_target_network()
         
         # Calcular promedios móviles
         window = min(100, episode + 1)

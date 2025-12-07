@@ -75,6 +75,9 @@ class DQNAgent:
         self.batch_size = config.BATCH_SIZE
         self.target_update_freq = config.TARGET_UPDATE_FREQ
         
+        # TAU para soft update (clave para evitar olvido catastrófico)
+        self.tau = 0.005
+        
         # Redes neuronales
         self.policy_net = DQNNetwork(
             state_dim, action_dim, config.HIDDEN_LAYERS
@@ -87,7 +90,7 @@ class DQNAgent:
         
         # Optimizador y función de pérdida
         self.optimizer = optim.Adam(self.policy_net.parameters(), lr=config.LEARNING_RATE)
-        self.criterion = nn.MSELoss()
+        self.criterion = nn.SmoothL1Loss()  # Huber Loss - más robusto que MSE
         
         # Buffer de replay
         self.memory = ReplayBuffer(config.MEMORY_SIZE)
@@ -155,8 +158,10 @@ class DQNAgent:
         return loss_value
     
     def update_target_network(self):
-        # Actualizar red objetivo con pesos de red de política
-        self.target_net.load_state_dict(self.policy_net.state_dict())
+        # Soft update: θ_target = τ*θ_policy + (1-τ)*θ_target
+        # Esto evita cambios bruscos y previene el olvido catastrófico
+        for target_param, policy_param in zip(self.target_net.parameters(), self.policy_net.parameters()):
+            target_param.data.copy_(self.tau * policy_param.data + (1.0 - self.tau) * target_param.data)
     
     def store_transition(self, state, action, reward, next_state, done):
         # Almacenar una transición en el buffer de replay.
