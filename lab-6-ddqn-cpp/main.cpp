@@ -131,10 +131,8 @@ void saveMetricsCSV(const TrainingMetrics& metrics, const std::string& filename)
 }
 
 int main(int argc, char* argv[]) {
-    std::cout << "============================================================" << std::endl;
     std::cout << "  Comparación DQN vs Double DQN - Implementación C++" << std::endl;
     std::cout << "  Entorno: CartPole" << std::endl;
-    std::cout << "============================================================" << std::endl;
     
     int num_episodes = 500;
     if (argc > 1) {
@@ -150,11 +148,6 @@ int main(int argc, char* argv[]) {
     // Entrenar Double DQN
     auto ddqn_metrics = trainAgent(true, num_episodes, true);
     saveMetricsCSV(ddqn_metrics, "ddqn_metrics.csv");
-    
-    // Resumen comparativo
-    std::cout << "\n============================================================" << std::endl;
-    std::cout << "  RESUMEN COMPARATIVO" << std::endl;
-    std::cout << "============================================================" << std::endl;
     
     double dqn_avg = std::accumulate(dqn_metrics.rewards.begin(), dqn_metrics.rewards.end(), 0.0) / dqn_metrics.rewards.size();
     double ddqn_avg = std::accumulate(ddqn_metrics.rewards.begin(), ddqn_metrics.rewards.end(), 0.0) / ddqn_metrics.rewards.size();
@@ -182,11 +175,6 @@ int main(int argc, char* argv[]) {
     std::cout << std::setw(25) << "Episodios exitosos" 
               << std::setw(15) << dqn_metrics.success_count 
               << std::setw(15) << ddqn_metrics.success_count << std::endl;
-    
-    std::cout << "\nArchivos generados:" << std::endl;
-    std::cout << "  - dqn_metrics.csv" << std::endl;
-    std::cout << "  - ddqn_metrics.csv" << std::endl;
-    std::cout << "\nUsa 'python visualize.py' para generar gráficos." << std::endl;
     
     return 0;
 }
